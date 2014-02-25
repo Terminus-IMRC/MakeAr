@@ -49,6 +49,12 @@ def output_as_header():
 	print("};")
 	print("#endif /* AR_INSIDE */")
 
+def output_raw():
+	for i in range(len(allar)):
+		for j in range(X-1):
+			print("%d"%allar[i][j], end=' ')
+		print("%d"%allar[i][X-1])
+
 def main():
 	global X, ar
 
@@ -64,7 +70,7 @@ def main():
 
 	func(0)
 
-	output_as_header()
+	output_raw()
 
 def error(str):
 	print("error: "+str)
