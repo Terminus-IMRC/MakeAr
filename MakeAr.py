@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import sys
 
+allar=[]
 cursum=0
 
 def func(level):
@@ -8,7 +9,7 @@ def func(level):
 
 	if level==X:
 		if cursum==X*(X**2+1)/2:
-			print(ar)
+			allar.append(ar[:])
 		return
 
 	if level==0:
@@ -22,6 +23,31 @@ def func(level):
 		if cursum<=X*(X**2+1)/2:
 			func(level+1)
 		cursum-=i
+
+def output_as_header():
+	print("#ifndef AR_INSIDE")
+	print("#define AR_INSIDE")
+	print("#ifndef X")
+	print("#error Define X in compile")
+	print("#else")
+	print("#if X!=%d"%X)
+	print("#error X must be %d"%X)
+	print("#endif")
+	print("#endif")
+	print()
+	print("#define AR_LEN %d"%len(allar))
+	print("AR_TYPE ar[AR_LEN][X]={")
+	for i in range(len(allar)-1):
+		print("\t{", end='')
+		for j in range(X-1):
+			print("%d,"%allar[i][j], end='\t')
+		print("%d},"%allar[i][X-1])
+	print("\t{", end='')
+	for j in range(X-1):
+		print("%d,"%allar[len(allar)-1][j], end='\t')
+	print("%d}"%allar[len(allar)-1][X-1])
+	print("}")
+	print("#endif /* AR_INSIDE */")
 
 def main():
 	global X, ar
@@ -37,6 +63,8 @@ def main():
 	ar=[[]for x in range(X)]
 
 	func(0)
+
+	output_as_header()
 
 def error(str):
 	print("error: "+str)
