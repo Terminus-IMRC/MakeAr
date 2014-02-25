@@ -46,7 +46,7 @@ def output_as_header():
 	for j in range(X-1):
 		print("%d,"%allar[len(allar)-1][j], end='\t')
 	print("%d}"%allar[len(allar)-1][X-1])
-	print("}")
+	print("};")
 	print("#endif /* AR_INSIDE */")
 
 def main():
